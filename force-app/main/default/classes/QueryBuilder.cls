@@ -9,6 +9,7 @@ public virtual inherited sharing class QueryBuilder {
 
     private Boolean withSecurityEnforced = false;
 
+    private QueryConditionBuilder queryCondition;
 
     public QueryBuilder() {
 
@@ -22,7 +23,7 @@ public virtual inherited sharing class QueryBuilder {
     public QueryBuilder addField(String fName) {
 
         if (fName.contains(',')) {
-            return this.addFields();
+            return this.addFields(fName);
         }
 
         this.selectFields.add(fName.trim());
@@ -31,7 +32,11 @@ public virtual inherited sharing class QueryBuilder {
 
     public QueryBuilder addFields(String fNames) {
 
-        this.fieldList.add(fNames.trim().split(','));
+        List<String> fList = fNames.trim().split(',');
+        for (String fName : fList) {
+            this.selectFields.add(fName);
+        }
+
         return this;
     }
 
@@ -39,6 +44,11 @@ public virtual inherited sharing class QueryBuilder {
 
         this.fromObject = fromObject;
         return this;
+    }
+
+    public QueryConditionBuilder addConditions() {
+
+        return this.queryCondition;
     }
 
     public class QueryBuilderException extends Exception {}
