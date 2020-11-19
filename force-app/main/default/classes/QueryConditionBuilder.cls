@@ -1,3 +1,7 @@
+/**
+ * QueryConditionBuilder
+ */
+
 public class QueryConditionBuilder {
 
     private String whereClause;
